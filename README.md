@@ -1,3 +1,33 @@
+# Reflux — fork para estudos e contribuições
+
+Este repositório é um **fork** de [Nightfruit/reflux](https://github.com/Nightfruit/reflux). O projeto original é um addon para Stremio. A documentação a seguir descreve esta cópia para fins de navegação; não atribui autoria original ao mantenedor do fork.
+
+## Código e tecnologias
+
+- Node.js e TypeScript, NestJS.
+- Prisma e integrações de catálogo/metadados.
+- Consulte o `package.json` e `.env.example` para as configurações realmente exigidas.
+
+## Desenvolvimento local
+
+```bash
+pnpm install
+pnpm build
+pnpm start:dev
+```
+
+As chamadas a provedores externos podem deixar de funcionar sem configuração ou por mudanças nos serviços de terceiros. Use somente conteúdos para os quais possua autorização.
+
+## Documentação complementar
+
+- [Requisitos e limites](docs/REQUISITOS.md)
+- [Arquitetura](docs/ARQUITETURA.md)
+- [UML](docs/UML.puml)
+- [Plano de testes](docs/PLANO_TESTES.md)
+- [Guia para assistentes](AGENTS.md)
+
+## README do projeto original
+
 ![REFLUX](https://raw.githubusercontent.com/Nightfruit/reflux/main/public/images/banner.png)
 
 # Reflux - Addon para Stremio
