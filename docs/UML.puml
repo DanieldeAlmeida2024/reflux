@@ -1,0 +1,12 @@
+@startuml
+title Reflux — componentes observados e conceituais
+actor ClienteStremio
+component "Módulo Stremio" as Stremio
+component "Registro de provedores" as Provedores
+component "Serviços TMDB / catálogo" as Catalogo
+database "Prisma / banco" as Banco
+ClienteStremio --> Stremio
+Stremio --> Provedores
+Provedores --> Catalogo
+Stremio --> Banco : quando aplicavel
+@enduml
