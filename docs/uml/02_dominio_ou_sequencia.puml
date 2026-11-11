@@ -1,0 +1,16 @@
+@startuml
+class Movie { id; title; rating; releasedAt }
+class Series { id; title; rating; releasedAt }
+class MovieStream { id; provider; audio; quality; expiresAt }
+class SeriesStream { id; provider; audio; season; episode; expiresAt }
+class MovieGenre { id; name }
+class SeriesGenre { id; name }
+Movie "1" -- "*" MovieStream
+Series "1" -- "*" SeriesStream
+Movie "*" -- "*" MovieGenre
+Series "*" -- "*" SeriesGenre
+note bottom
+Streams por mídia e provedor;
+relações Prisma com cascade nas streams.
+end note
+@enduml
