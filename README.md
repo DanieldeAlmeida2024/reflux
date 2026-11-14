@@ -58,3 +58,11 @@ Agradeço pelo apoio e qualquer feedback para ajudar a melhorar o addon!
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT — veja o arquivo [LICENSE](https://github.com/Nightfruit/reflux/blob/main/LICENSE) para mais detalhes.
+
+## Verificações deste fork — utilitários e CI
+
+O fork mantém o código original de provedores e suas atribuições. Esta revisão corrige somente utilitários internos: `chunk()` rejeita tamanho zero, negativo ou não inteiro (que antes poderia causar loop infinito); `match()` devolve o `fallback` quando o regex não tem grupo de captura, respeitando `string | null`.
+
+Há um workflow de GitHub Actions que usa Node.js 22, restaura dependências por `pnpm install --frozen-lockfile`, executa `pnpm test` com regressões puras e compila com `pnpm build`. São testes **offline**, sem TMDB, banco, scraping ou streams. O sucesso do pipeline não certifica funcionamento dos provedores externos.
+
+`pnpm-lock.yaml` é versionado deliberadamente. Os serviços externos e a autenticação de provedores continuam fora dessa revisão.
