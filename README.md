@@ -72,3 +72,9 @@ Há um workflow de GitHub Actions que usa Node.js 22, restaura dependências por
 Os endpoints `/stream` e `/meta` exigem IDs inteiros positivos dentro do intervalo seguro do JavaScript. Parâmetros de temporada/episódio e `skip` do catálogo aceitam somente inteiros não negativos (campos opcionais preservam o valor padrão zero). Valores como `Infinity`, `NaN`, números fracionários, negativos e valores fora de `Number.MAX_SAFE_INTEGER` retornam HTTP 400, antes de consultar provedores externos.
 
 As funções puras ficam em `src/utils/request-params.ts` e são verificadas em `tests/request-params.test.mjs`, sem dependência de banco ou provedor externo. Esta alteração não altera a autorização ou a disponibilidade dos provedores.
+
+## Documentação de estudo e apresentação
+
+[Especificação própria](docs/projeto/ESPECIFICACAO.md) · [Diagramas UML](docs/uml/README.md) · [Matriz histórica de testes](docs/testes/PLANO_DE_TESTES.md).
+
+A modelagem original foi mantida como referência; os testes atuais e os limites de execução são documentados em [Plano de testes vigente](docs/PLANO_TESTES.md) e nas execuções de CI. Não atribuir aprovação de testes a casos apenas planejados.
