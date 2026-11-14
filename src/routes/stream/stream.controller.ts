@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { MovieStream, SeriesStream } from '@prisma/client';
 import { Response } from 'express';
+import { optionalIndex, positiveSafeId } from '@/utils/request-params';
 
 @Controller('/stream')
 export class StreamController {
@@ -31,11 +32,11 @@ export class StreamController {
     const type =
       this.providersTrendingService.convertStringToContentType(category);
 
-    const coerceId = Number(id);
-    const coerceSeason = !Number.isNaN(Number(season)) ? Number(season) : 0;
-    const coerceEpisode = !Number.isNaN(Number(episode)) ? Number(episode) : 0;
+    const coerceId = positiveSafeId(id);
+    const coerceSeason = optionalIndex(season);
+    const coerceEpisode = optionalIndex(episode);
 
-    if (!type || Number.isNaN(coerceId)) {
+    if (!type || coerceId === null || coerceSeason === null || coerceEpisode === null) {
       throw new BadRequestException();
     }
 
