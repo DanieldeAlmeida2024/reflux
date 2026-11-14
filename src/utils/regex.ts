@@ -7,8 +7,10 @@ export function match(
     return fallback;
   }
 
-  const match = content.match(regex);
-  return match ? match[1] : fallback;
+  const result = content.match(regex);
+  // Regex without a capture group is not a valid extraction pattern.
+  // Honor the declared string | null contract rather than returning undefined.
+  return result && typeof result[1] === 'string' ? result[1] : fallback;
 }
 
 export function matches(
