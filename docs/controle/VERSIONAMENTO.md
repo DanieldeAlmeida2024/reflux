@@ -16,3 +16,7 @@
 - Aplica validações aos controladores `StreamController`, `MetaController` e `CatalogController`, com erro 400 para parâmetros numéricos inválidos.
 - Regressões RFX-U05–U07 preservam os defaults opcionais e rejeitam `NaN`, `Infinity`, valores negativos/frações e inteiros fora do intervalo seguro.
 - Nenhuma migração, busca remota, credencial ou configuração de produção é modificada.
+
+## Reconciliação documental de 14/11/2026
+
+Especificações e UML históricas migradas para a `main` atual com aviso de escopo, sem substituir testes, arquitetura ou código posteriores. O CI vigente continua sendo a fonte de evidência funcional.
