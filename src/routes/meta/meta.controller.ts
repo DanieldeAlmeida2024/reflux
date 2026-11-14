@@ -1,6 +1,7 @@
 import { ProvidersTrendingService } from '@/modules/providers/services/trending.service';
 import { StremioService } from '@/modules/stremio/stremio.service';
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
+import { positiveSafeId } from '@/utils/request-params';
 
 @Controller('/meta')
 export class MetaController {
@@ -16,9 +17,9 @@ export class MetaController {
   ) {
     const type =
       this.providersTrendingService.convertStringToContentType(category);
-    const id = Number(section.slice(1));
+    const id = positiveSafeId(section.slice(1));
 
-    if (!type || Number.isNaN(id)) {
+    if (!type || id === null) {
       throw new BadRequestException();
     }
 

@@ -66,3 +66,9 @@ O fork mantém o código original de provedores e suas atribuições. Esta revis
 Há um workflow de GitHub Actions que usa Node.js 22, restaura dependências por `pnpm install --frozen-lockfile`, executa `pnpm test` com regressões puras e compila com `pnpm build`. São testes **offline**, sem TMDB, banco, scraping ou streams. O sucesso do pipeline não certifica funcionamento dos provedores externos.
 
 `pnpm-lock.yaml` é versionado deliberadamente. Os serviços externos e a autenticação de provedores continuam fora dessa revisão.
+
+## Validação das rotas HTTP Stremio
+
+Os endpoints `/stream` e `/meta` exigem IDs inteiros positivos dentro do intervalo seguro do JavaScript. Parâmetros de temporada/episódio e `skip` do catálogo aceitam somente inteiros não negativos (campos opcionais preservam o valor padrão zero). Valores como `Infinity`, `NaN`, números fracionários, negativos e valores fora de `Number.MAX_SAFE_INTEGER` retornam HTTP 400, antes de consultar provedores externos.
+
+As funções puras ficam em `src/utils/request-params.ts` e são verificadas em `tests/request-params.test.mjs`, sem dependência de banco ou provedor externo. Esta alteração não altera a autorização ou a disponibilidade dos provedores.
