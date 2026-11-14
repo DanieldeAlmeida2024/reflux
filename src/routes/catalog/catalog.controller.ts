@@ -1,6 +1,7 @@
 import { ProvidersTrendingService } from '@/modules/providers/services/trending.service';
 import { StremioService } from '@/modules/stremio/stremio.service';
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
+import { catalogSkip } from '@/utils/request-params';
 
 @Controller('/catalog')
 export class CatalogController {
@@ -19,7 +20,7 @@ export class CatalogController {
     @Param('params') params: string,
   ) {
     const query = new URLSearchParams(params);
-    const coerce = Number(query.get('skip'));
+    const skip = catalogSkip(query.get('skip'));
 
     const type =
       this.providersTrendingService.convertStringToContentType(category);
@@ -27,10 +28,9 @@ export class CatalogController {
       this.providersTrendingService.convertStringToTrending(section);
 
     const search = query.get('search');
-    const skip = !Number.isNaN(coerce) && coerce >= 0 ? coerce : null;
     const genre = query.get('genre');
 
-    if (!type || !trending) {
+    if (!type || !trending || skip === null) {
       throw new BadRequestException();
     }
 
