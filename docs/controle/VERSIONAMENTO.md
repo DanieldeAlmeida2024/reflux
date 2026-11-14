@@ -20,3 +20,9 @@
 ## Reconciliação documental de 14/11/2026
 
 Especificações e UML históricas migradas para a `main` atual com aviso de escopo, sem substituir testes, arquitetura ou código posteriores. O CI vigente continua sendo a fonte de evidência funcional.
+
+## RFX-DOC 1.3.0 · 14/11/2026 — autoria e comprovação
+
+- README remodelado para identificar o upstream `Nightfruit/reflux`, distinguir claramente contribuições próprias e origem de código/metadados.
+- Removidos do README de fork links herdados de instalação, banner promocional e contato social do autor upstream, que poderiam atribuir serviços de terceiros ao mantenedor do fork. O `package.json` e a licença originais foram preservados.
+- As evidências listadas referem-se exclusivamente aos testes puros e build de CI; não há alegação de funcionamento/instalação de streams de terceiros.
