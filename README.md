@@ -1,80 +1,44 @@
-# Reflux — fork para estudos e contribuições
+# Reflux — fork de estudo (NestJS / TypeScript)
 
-Fork de estudo de [Nightfruit/reflux](https://github.com/Nightfruit/reflux), addon para Stremio. A autoria do software original e de sua documentação pertence aos mantenedores do projeto de origem; este repositório reúne a cópia e referências de desenvolvimento.
+Este é um **fork de [Nightfruit/reflux](https://github.com/Nightfruit/reflux)**. A autoria e a licença MIT do Reflux original pertencem aos respectivos mantenedores. O código de provedores foi preservado com atribuição; as alterações deste fork se concentram em correções de utilitários, validação de parâmetros HTTP, documentação e testes reproduzíveis.
 
-## Código e tecnologias
+**Não sou responsável por serviços, URLs de instalação ou perfis sociais associados ao projeto original.** Este repositório não publica um serviço de streaming nem comprova disponibilidade de fontes de terceiros.
 
-- Node.js e TypeScript, NestJS.
-- Prisma e integrações de catálogo/metadados.
-- Consulte o `package.json` e `.env.example` para as configurações realmente exigidas.
+## O que este fork alterou e como comprovar
 
-## Desenvolvimento local
+| Área | Alteração neste fork | Evidência |
+| --- | --- | --- |
+| Utilitário `chunk` | Rejeita tamanho zero, negativo, não inteiro ou não finito; evita loop inválido | `tests/utils.test.mjs` |
+| Utilitário `match` | Aplica fallback quando expressão regular não possui grupo capturado | `tests/utils.test.mjs` |
+| `/stream` e `/meta` | ID inteiro positivo e seguro; temporada/episódio opcionais não negativos | `src/utils/request-params.ts`, `tests/request-params.test.mjs` |
+| Paginação `skip` | Rejeita `NaN`, `Infinity`, números negativos, frações e valores inseguros | `tests/request-params.test.mjs` |
+| Engenharia | CI com `pnpm install --frozen-lockfile`, testes puros e build NestJS | [GitHub Actions](https://github.com/DanieldeAlmeida2024/reflux/actions/workflows/quality.yml) |
+
+Os testes de contratos são **offline** e não provam que Stremio, TMDB, provedores, banco ou scraping funcionem remotamente.
+
+## Tecnologias e requisitos
+
+Node.js 22, pnpm 10.21.0, TypeScript, NestJS, Prisma. Consulte `.env.example` e `package.json` para parâmetros locais. Não use segredos reais em ambiente de demonstração compartilhado.
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
+pnpm test
 pnpm build
 pnpm start:dev
 ```
 
-As chamadas a provedores externos podem deixar de funcionar sem configuração ou por mudanças nos serviços de terceiros. Use somente conteúdos para os quais possua autorização.
+A inicialização completa pode requerer configuração de banco e integrações externas. O build não comprova disponibilidade dessas dependências.
 
-## Documentação complementar
+## Arquitetura e decisões
 
-- [Requisitos e limites](docs/REQUISITOS.md)
-- [Arquitetura](docs/ARQUITETURA.md)
-- [UML](docs/UML.puml)
-- [Plano de testes](docs/PLANO_TESTES.md)
-- [Guia para assistentes](AGENTS.md)
+- Controllers NestJS recebem solicitações do Stremio e validam parâmetros antes de delegar aos serviços.
+- Serviços e repositórios tratam catálogo/metadados e dependências do projeto original.
+- Validadores puros em `src/utils/` isolam contratos que podem ser testados sem rede.
 
-## Projeto de origem e atribuição
+Especificação [do fork](docs/projeto/ESPECIFICACAO.md), [arquitetura](docs/ARQUITETURA.md), [UML](docs/uml/README.md), [plano de testes atual](docs/PLANO_TESTES.md) e [histórico técnico](docs/controle/VERSIONAMENTO.md).
 
-![REFLUX](https://raw.githubusercontent.com/Nightfruit/reflux/main/public/images/banner.png)
+## Limites, autoria e licenciamento
 
-### Informações fornecidas pelo projeto original
+O conteúdo e as integrações de terceiros dependem das condições de uso e direitos de distribuição próprios. A presença de uma integração no código não concede autorização para consumir ou redistribuir conteúdo. O software original tem licença MIT; mantenha avisos de copyright e a origem [Nightfruit/reflux](https://github.com/Nightfruit/reflux) ao redistribuir modificações.
 
-O Reflux é um addon para Stremio que permite aos usuários acessar um enorme catálogo de filmes e séries, oferecendo uma maneira rápida e fácil de assistir onde quer que você esteja!
-
-## Instalação
-
-Para instalar o addon Reflux, basta adicionar o seguinte link aos seus addons do Stremio:
-
-`https://rx.postclub.me/manifest.json`
-
-## Funcionalidades
-
-* Acesso a um enorme conteúdo da **Rede Canais**, **Vizer (em breve)** e vários sites!
-* Aproveite uma forma simples e prática de assistir suas séries e filmes favoritos.
-
-## Contribuindo
-
-Contribuições para melhorar o Reflux são muito bem-vindas! Se quiser ajudar, fique à vontade para abrir uma issue ou pull request. Você também pode ajudar reportando bugs, sugerindo novos recursos ou enviando feedback.
-
-## Relato de Problemas
-
-Se encontrar algum bug, problema com conteúdo ou tiver outras preocupações, sinta-se à vontade para entrar em contato. Você pode falar diretamente comigo pelo Instagram em [@mrsev7en](https://www.instagram.com/mrsev7en).
-
-Agradeço pelo apoio e qualquer feedback para ajudar a melhorar o addon!
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT — veja o arquivo [LICENSE](https://github.com/Nightfruit/reflux/blob/main/LICENSE) para mais detalhes.
-
-## Verificações deste fork — utilitários e CI
-
-O fork mantém o código original de provedores e suas atribuições. Esta revisão corrige somente utilitários internos: `chunk()` rejeita tamanho zero, negativo ou não inteiro (que antes poderia causar loop infinito); `match()` devolve o `fallback` quando o regex não tem grupo de captura, respeitando `string | null`.
-
-Há um workflow de GitHub Actions que usa Node.js 22, restaura dependências por `pnpm install --frozen-lockfile`, executa `pnpm test` com regressões puras e compila com `pnpm build`. São testes **offline**, sem TMDB, banco, scraping ou streams. O sucesso do pipeline não certifica funcionamento dos provedores externos.
-
-`pnpm-lock.yaml` é versionado deliberadamente. Os serviços externos e a autenticação de provedores continuam fora dessa revisão.
-
-## Validação das rotas HTTP Stremio
-
-Os endpoints `/stream` e `/meta` exigem IDs inteiros positivos dentro do intervalo seguro do JavaScript. Parâmetros de temporada/episódio e `skip` do catálogo aceitam somente inteiros não negativos (campos opcionais preservam o valor padrão zero). Valores como `Infinity`, `NaN`, números fracionários, negativos e valores fora de `Number.MAX_SAFE_INTEGER` retornam HTTP 400, antes de consultar provedores externos.
-
-As funções puras ficam em `src/utils/request-params.ts` e são verificadas em `tests/request-params.test.mjs`, sem dependência de banco ou provedor externo. Esta alteração não altera a autorização ou a disponibilidade dos provedores.
-
-## Documentação de estudo e apresentação
-
-[Especificação própria](docs/projeto/ESPECIFICACAO.md) · [Diagramas UML](docs/uml/README.md) · [Matriz histórica de testes](docs/testes/PLANO_DE_TESTES.md).
-
-A modelagem original foi mantida como referência; os testes atuais e os limites de execução são documentados em [Plano de testes vigente](docs/PLANO_TESTES.md) e nas execuções de CI. Não atribuir aprovação de testes a casos apenas planejados.
+Para sugestões sobre **as alterações deste fork**, abra uma issue neste repositório. Contatos pessoais dos autores originais não são suporte deste fork.
