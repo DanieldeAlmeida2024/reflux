@@ -1,6 +1,6 @@
 # Reflux — fork para estudos e contribuições
 
-Este repositório é um **fork** de [Nightfruit/reflux](https://github.com/Nightfruit/reflux). O projeto original é um addon para Stremio. A documentação a seguir descreve esta cópia para fins de navegação; não atribui autoria original ao mantenedor do fork.
+Fork de estudo de [Nightfruit/reflux](https://github.com/Nightfruit/reflux), addon para Stremio. A autoria do software original e de sua documentação pertence aos mantenedores do projeto de origem; este repositório reúne a cópia e referências de desenvolvimento.
 
 ## Código e tecnologias
 
@@ -26,11 +26,11 @@ As chamadas a provedores externos podem deixar de funcionar sem configuração o
 - [Plano de testes](docs/PLANO_TESTES.md)
 - [Guia para assistentes](AGENTS.md)
 
-## README do projeto original
+## Projeto de origem e atribuição
 
 ![REFLUX](https://raw.githubusercontent.com/Nightfruit/reflux/main/public/images/banner.png)
 
-# Reflux - Addon para Stremio
+### Informações fornecidas pelo projeto original
 
 O Reflux é um addon para Stremio que permite aos usuários acessar um enorme catálogo de filmes e séries, oferecendo uma maneira rápida e fácil de assistir onde quer que você esteja!
 
