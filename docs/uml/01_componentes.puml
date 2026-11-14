@@ -1,0 +1,24 @@
+@startuml
+actor "Cliente Stremio" as C
+component "ManifestController" as Manifest
+component "CatalogController" as Cat
+component "MetaController" as Meta
+component "StreamController" as Stream
+component "ManifestService" as Service
+component "ProvidersRegistryService" as Registry
+component "TMDB / Providers" as Ext
+database "Prisma PostgreSQL" as DB
+C --> Manifest
+C --> Cat
+C --> Meta
+C --> Stream
+Manifest --> Service
+Service --> Registry
+Registry --> Ext
+Cat --> DB
+Meta --> DB
+Stream --> DB
+note bottom
+Fork Nightfruit/reflux: manter atribuição.
+end note
+@enduml
