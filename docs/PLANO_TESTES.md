@@ -22,3 +22,16 @@ O teste Python é apenas estrutural e não comprova o funcionamento do addon.
 Execução: `pnpm test` e `pnpm build`, com Node 22. O workflow `.github/workflows/quality.yml` executa esses gates sem acessar banco de dados, TMDB, fontes de streaming ou rede de terceiros (além do registry de dependências).
 
 **Pendente**: testes NestJS de módulos, HTTP com banco isolado, contratos Stremio e provedores externos autorizados, segurança e operação em produção.
+
+## RFX 1.2.0 — regressão de entradas dos endpoints públicos
+
+| Caso | Entrada | Resultado |
+| --- | --- | --- |
+| RFX-U05 | ID `1` ou `9007199254740991` | Inteiro positivo aceito |
+| RFX-U05 | ID `0`, negativo, fracionário, infinito, notação exponencial ou acima de MAX_SAFE_INTEGER | Rejeição |
+| RFX-U06 | Temporada/episódio ausente | Padrão 0 preservado |
+| RFX-U06 | Temporada/episódio explícito não inteiro, negativo, inválido ou infinito | Rejeição |
+| RFX-U07 | Paginação ausente | Padrão 0 preservado |
+| RFX-U07 | Skip negativo, fracionário, infinito ou fora do intervalo seguro | Rejeição |
+
+`pnpm test` executa `tests/request-params.test.mjs` juntamente com a suíte de utilitários existente. `pnpm build` verifica a integração dos controladores NestJS e as anotações TypeScript. Não há E2E de Stremio ou scraping real nesta revisão.
